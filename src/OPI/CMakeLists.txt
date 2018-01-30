@@ -111,6 +111,14 @@ if(ENABLE_FORTRAN_SUPPORT)
     SHARED
     ${CMAKE_BINARY_DIR}/generated/OPI/opi_fortran_bindings.f90
   )
+  # make sure that common symbols are enabled on macOS
+  if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  #     set_target_properties(OPI-Fortran PROPERTIES LINK_FLAGS "-r")
+  # Make sure we can find the library after installation
+       SET_TARGET_PROPERTIES (OPI OPI-Fortran
+       PROPERTIES BUILD_WITH_INSTALL_RPATH 1
+        	INSTALL_NAME_DIR "@rpath")
+  endif()
 endif()
 
 foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
@@ -124,7 +132,13 @@ if(NOT WIN32)
   target_link_libraries( OPI
     dl
   )
+  target_link_libraries( OPI-Fortran
+    OPI
+    dl
+  )
 endif()
+
+add_dependencies(OPI-Fortran OPI)
 
 # install library
 install(
