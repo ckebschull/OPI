@@ -51,7 +51,21 @@ if(NOT ENABLE_CL_SUPPORT)
 endif()
 
 # enable all warnings
-add_definitions( -Wall )
+#add_definitions( -Wall )
+
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+set (CMAKE_CPP_FLAGS "${CMAKE_CPP_FLAGS} -fPIC")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+
+if ("${CMAKE_Fortran_COMPILER_ID}" MATCHES "GNU")
+	set (CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS} -O0 -g -fPIC  -fbounds-check -fbacktrace -ffree-line-length-none -finit-local-zero -cpp -Wall")
+    #set (CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS} -O3 -fPIC -ffree-line-length-none")
+elseif("${CMAKE_Fortran_COMPILER_ID}" MATCHES "Intel")
+	#set (CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS} -g -O -fPIC -fno-omit-frame-pointer -assume realloc_lhs  -check all  -traceback  -fstack-protector  -assume protect_parens")
+	set (CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS} -g -O -fPIC -fno-omit-frame-pointer -traceback -check bounds -check output-conversion -check format -check pointers -check uninit -ftrapuv -assume realloc_lhs -fstack-protector -assume protect_parens")
+	#set (CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS} -O3 -xHost -fPIC")
+endif()
+
 # add drop down menu for build type to gui
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
@@ -63,7 +77,8 @@ endif(NOT CMAKE_BUILD_TYPE)
 # add option to enable c++11 compiler features
 option(ENABLE_CXX11 "Enable c++11" OFF)
 if(ENABLE_CXX11)
-  add_definitions( --std=c++11)
+  #add_definitions( --std=c++11)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11")
   message( "C++11 enabled")
 endif()
 
