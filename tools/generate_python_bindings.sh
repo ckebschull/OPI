@@ -26,14 +26,14 @@
 if [ -z "$1" ]
 then
 	echo "Usage: $0 <full path to OPI installation directory>"
-elif [ -z `which h2xml` ] || [ -z `which xml2py` ]
+elif [ -z `which h2xml.py` ] || [ -z `which xml2py.py` ]
 then
 	echo "Please install h2xml and xml2py (Debian/Ubuntu: apt-get install python-ctypeslib"
 else
 	OPI_INSTALL=$1
 	OUT_FILE=opi.py
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OPI_INSTALL/lib
-	h2xml $OPI_INSTALL/include/OPI/opi_c_bindings.h -I $OPI_INSTALL/include/OPI/ -q -c -o /tmp/opi.py.xml
-	xml2py /tmp/opi.py.xml -o $OUT_FILE -l libOPI.so
-	rm /tmp/opi.py.xml
+	h2xml.py $OPI_INSTALL/include/OPI/opi_c_bindings.h -I $OPI_INSTALL/include/OPI/ -q -c -o opi.py.xml
+	xml2py.py opi.py.xml -o $OUT_FILE -l libOPI.so
+	rm opi.py.xml
 fi
