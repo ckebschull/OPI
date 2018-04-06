@@ -62,7 +62,7 @@ if ("${CMAKE_Fortran_COMPILER_ID}" MATCHES "GNU")
     #set (CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS} -O3 -fPIC -ffree-line-length-none")
 elseif("${CMAKE_Fortran_COMPILER_ID}" MATCHES "Intel")
 	#set (CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS} -g -O -fPIC -fno-omit-frame-pointer -assume realloc_lhs  -check all  -traceback  -fstack-protector  -assume protect_parens")
-	set (CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS} -g -O -fPIC -fno-omit-frame-pointer -traceback -check bounds -check output-conversion -check format -check pointers -check uninit -ftrapuv -assume realloc_lhs -fstack-protector -assume protect_parens")
+	set (CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS} -g -O -fPIC -static-intel -fno-omit-frame-pointer -traceback -check bounds -check output-conversion -check format -check pointers -check uninit -ftrapuv -assume realloc_lhs -fstack-protector -assume protect_parens")
 	#set (CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS} -O3 -xHost -fPIC")
 endif()
 
