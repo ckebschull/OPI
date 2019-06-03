@@ -21,6 +21,8 @@ program opi_host_fortran_test
   integer(C_INT) :: status
   type(OPI_Orbit),pointer :: orbit (:)
   integer(C_INT) :: testint = 10
+  integer :: mode = OPI_MODE_SINGLE_EPOCH
+
   ! create host
   host = OPI_createHost()
 
@@ -50,7 +52,7 @@ program opi_host_fortran_test
       OPI_Module_getPropertyString(propagator, i -1)
     end do
     ! run propagation of our test propagator
-    status = OPI_Propagator_propagate(propagator, data, 0.d0, 0.d0)
+    status = OPI_Propagator_propagate(propagator, data, 0.d0, 0.d0, C_LOC(mode), C_NULL_PTR)
 
     ! retrieve orbital data values
     orbit => OPI_Population_getOrbit(data)

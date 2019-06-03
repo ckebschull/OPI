@@ -30,7 +30,7 @@ class BasicCPP: public OPI::Propagator
         }
 
         // This is the main function every plugin needs to implement to do the actual propagation.
-        virtual OPI::ErrorCode runPropagation(OPI::Population& population, double julian_day, double dt )
+        virtual OPI::ErrorCode runPropagation(OPI::Population& population, double julian_day, double dt, OPI::PropagationMode mode, OPI::IndexList *list)
         {
             // In this simple example, we don't have to fiddle with Julian dates. Instead, we'll just
             // look at the seconds that have elapsed since the first call of the propagator. The first
