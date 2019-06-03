@@ -73,6 +73,8 @@ namespace OPI
 	{
 #ifdef _WIN32
 		return ".dll";
+#elif __MACH__
+    return ".dylib";
 #else
 		return ".so";
 #endif
